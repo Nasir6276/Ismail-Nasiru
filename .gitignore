@@ -1,0 +1,34 @@
+That confirms it — `.next` isn't listed, which is why the build cache (with your key baked in) got committed. Here's an updated `.gitignore` using Next.js's standard template, so you don't hit this with other generated folders either:
+
+```gitignore
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# next.js
+.next
+/out
+
+# production
+/build
+
+# env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+```
