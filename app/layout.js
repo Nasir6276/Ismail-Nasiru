@@ -25,8 +25,15 @@ export default function RootLayout({ children }) {
     <html lang="en-US">
       <head>
         <link
+          rel="preload"
+          href="/fonts/CalSans-SemiBold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@200..800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
         />
         <link rel="stylesheet" href="/css/icomoon.css" />
       </head>

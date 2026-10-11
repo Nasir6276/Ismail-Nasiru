@@ -35,6 +35,8 @@ export default function Preloader() {
     )
       return;
 
+    let cancelled = false;
+
     // Position the line exactly in the gap between the two words,
     // recalculated on resize so it stays centered on mobile too.
     const positionLine = () => {
@@ -46,6 +48,15 @@ export default function Preloader() {
 
     positionLine();
     window.addEventListener("resize", positionLine);
+
+    // Re-measure once Cal Sans has loaded so the line sits in the real gap.
+    // The catch keeps a failed font request from throwing an unhandled error.
+    document.fonts
+      .load("600 1em 'Cal Sans'")
+      .then(() => {
+        if (!cancelled) positionLine();
+      })
+      .catch(() => {});
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -65,6 +76,7 @@ export default function Preloader() {
         0,
       );
       return () => {
+        cancelled = true;
         window.removeEventListener("resize", positionLine);
         tl.kill();
       };
@@ -95,6 +107,7 @@ export default function Preloader() {
     );
 
     return () => {
+      cancelled = true;
       window.removeEventListener("resize", positionLine);
       tl.kill();
     };

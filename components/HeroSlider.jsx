@@ -1,31 +1,26 @@
 "use client";
 
-import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectFade, Autoplay, Navigation } from "swiper/modules";
+import { EffectFade, Autoplay } from "swiper/modules";
 import { slides, heroCategories, socialLinks } from "@/data/slides";
 import Typewriter from "./Typewriter";
 import { FaArrowRight } from "react-icons/fa6";
 
 export default function HeroSlider() {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
+  // Loop needs more slides than are visible at once.
+  // With fade effect, 3+ slides is the safe minimum.
+  const canLoop = slides.length > 2;
 
   return (
     <div className="tf-slideshow tf-btn-swiper-main">
       <Swiper
         className="tf-swiper sw-slide-show slider_animate"
-        modules={[EffectFade, Autoplay, Navigation]}
+        modules={[EffectFade, Autoplay]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
-        loop
-        autoplay={{ delay: 3000 }}
+        loop={canLoop}
+        autoplay={canLoop ? { delay: 3000 } : false}
         speed={800}
-        onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current;
-          swiper.params.navigation.nextEl = nextRef.current;
-        }}
-        navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>
@@ -72,19 +67,6 @@ export default function HeroSlider() {
             </div>
           </SwiperSlide>
         ))}
-
-        {/* <div className="group-btn-slider">
-          <div className="container-4">
-            <div className="wrap">
-              <div className="tf-nav-sw nav-prev-swiper" ref={prevRef}>
-                <i className="icon-ArrowLeft" />
-              </div>
-              <div className="tf-nav-sw nav-next-swiper" ref={nextRef}>
-                <i className="icon-ArrowRight" />
-              </div>
-            </div>
-          </div>
-        </div> */}
       </Swiper>
 
       <ul className="tf-social-icon flex-column">
